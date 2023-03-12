@@ -19,25 +19,36 @@ class Admin {
         return this.username.equals(username) && this.password.equals(password);
     }
     
-    public void addData(Dictionary<Integer, String[]> dictionary,int id) {
+    public void addData(Dictionary<Integer, String[]> transport,int id) {
         Scanner input=new Scanner(System.in);
         String s1=input.nextLine();
         String s2=input.nextLine();
         String s3=input.nextLine();
-        dictionary.put(id, new String[] {s1, s2, s3});
+        transport.put(id, new String[] {s1, s2, s3});
     }
-    public void editData(Dictionary<Integer, String[]> dictionary,int id) {
+    public void editData(Dictionary<Integer, String[]> transport,int id) {
         System.out.println("edit");
 
     }
-    public void deleteData(Dictionary<Integer, String[]> dictionary,int id) {
-        dictionary.remove(id);
+    public void deleteData(Dictionary<Integer, String[]> transport,int id) {
+        transport.remove(id);
         System.out.println("REMOVED THE ELEMENT");
 
     }
 }
 
 public class demop {
+
+    public static void showdata( Dictionary<Integer, String[]> transport ){
+        Enumeration<Integer> keys = transport.keys();
+            while (keys.hasMoreElements()) {
+                Integer key = keys.nextElement();
+                String[] value = transport.get(key);
+                System.out.println("TRANSPORT ID: " + key);
+                System.out.println("DETAILS     : " + Arrays.toString(value));
+            }
+    }
+
     public static void main(String[] args) {
 
         Scanner input=new Scanner(System.in);
@@ -46,9 +57,13 @@ public class demop {
         Dictionary<Integer, String[]> bus = new Hashtable<>();
         Dictionary<Integer, String[]> airplane = new Hashtable<>();
 
-        Admin a1=new Admin("abcd","a1b2c3");
-        if((a1.authenticate("abcd", "a1b2c3"))==true){
-            System.out.println("abc");
+
+        Admin a1=new Admin("admin","abc123");
+        System.out.println("===========<<ENTER USER NAME AND PASSWARD:>>===========");
+        String uname=input.nextLine();
+        String passward=input.nextLine();
+        boolean loginpass=(a1.authenticate(uname, passward));
+        if(loginpass==true){
 
             boolean conti=true;
             while(conti){
@@ -87,12 +102,8 @@ public class demop {
                     System.out.println("==============<<SELECT>>=============\n 1: FOR TRAIN \n 2: FOR BUS \n 3: FOR AIRPORT \n=====================================");
                     int select=input.nextInt();
                     if(select==1){
-                        // int id=input.nextInt();
-                        // if (train.containsKey(id)) {
-                        //     a1.editData(train,id);
-                        //   } else {
-                        //     System.out.println(id + " is train number is not present in data base");
-                        //   }
+                        int id=input.nextInt();
+                        a1.editData(train,id);
                     }
                     else if(select==2){
                         int id=input.nextInt();
@@ -137,24 +148,29 @@ public class demop {
                 }
             }
         }
-        // Integer key = entry.getKey();
-        // String[] values = entry.getValue();
-        // System.out.println("Key: " + key + " Values: " + Arrays.toString(values));
-        // string [] k valueA = dictionary.get(1);
-        // System.out.println("Value of A: " + valueA);
-
-
-
-        System.out.println("select 1,2,3 you want if you want to see the records of train bus airplane respectively:");
-        int s=input.nextInt();
-        if (s==1){
-            Enumeration<Integer> keys = train.keys();
-            while (keys.hasMoreElements()) {
-                Integer key = keys.nextElement();
-                String[] value = train.get(key);
-                System.out.println("transport id: " + key);
-                System.out.println("details: " + Arrays.toString(value));
+        else{
+            System.out.println("=========<<WRONG USER NAME AND PASSWARD>>=========");
+        }
+        
+        if(loginpass==true){
+            System.out.println("===<<SELECT 1,2,3 YOU WANT IF YOU WANT TO SEE THE RECORDS OF TRAIN BUS AIRPLANE RESPECTIVELY:>>==");
+            int s=input.nextInt();
+            if (s==1){
+                System.out.println("===========<<ALL TRAIN DETAILS>============");
+                showdata(train);
             }
+            else if(s==2){
+                System.out.println("============<<ALL BUS DETAILS>>=============");
+                showdata(bus);
+            }
+            else if(s==3){
+                System.out.println("============<<ALL BUS DETAILS>>=============");
+                showdata(airplane);
+            }
+            else{
+                System.out.println("===========<<WRONG CHOICE>>=============");
+            }
+
         }
         
     }
