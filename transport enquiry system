@@ -143,10 +143,7 @@ public class demop {
         // string [] k valueA = dictionary.get(1);
         // System.out.println("Value of A: " + valueA);
 
-       
-            
-        // String[] fruits = train.get(1);
-        // System.out.println("Fruits: " + String.join(", ", fruits));
+
 
         System.out.println("select 1,2,3 you want if you want to see the records of train bus airplane respectively:");
         int s=input.nextInt();
